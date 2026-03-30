@@ -14143,4 +14143,34 @@ def err_cuda_device_kernel_launch_not_supported
 def err_cuda_device_kernel_launch_require_rdc
     : Error<"kernel launch from __device__ or __global__ function requires "
             "relocatable device code (i.e. requires -fgpu-rdc)">;
+
+// Performance suggestion warnings
+def warn_perf_suggest_constexpr_function : Warning<
+  "function %0 could be declared constexpr; "
+  "compile-time evaluation would eliminate runtime cost">,
+  InGroup<PerfSuggestConstexpr>, DefaultIgnore;
+def warn_perf_suggest_consteval_function : Warning<
+  "constexpr function %0 is always called with constant arguments; "
+  "consider declaring it consteval to guarantee compile-time evaluation">,
+  InGroup<PerfSuggestConsteval>, DefaultIgnore;
+def warn_perf_suggest_pass_by_ref : Warning<
+  "parameter %0 of type %1 (size %2 bytes) is passed by value; "
+  "passing by const reference avoids a copy">,
+  InGroup<PerfSuggestByRef>, DefaultIgnore;
+def warn_perf_suggest_loop_fixed_bound : Warning<
+  "loop bound depends on %select{a function call|a variable parameter|a "
+  "volatile read|a pointer dereference}0; "
+  "a fixed upper bound enables loop unrolling and vectorization">,
+  InGroup<PerfSuggestLoopBound>, DefaultIgnore;
+def warn_perf_suggest_noexcept : Warning<
+  "function %0 does not throw exceptions; declaring it noexcept enables "
+  "better code generation and move semantics">,
+  InGroup<PerfSuggestNoexcept>, DefaultIgnore;
+def warn_perf_suggest_virtual_in_loop : Warning<
+  "virtual call to %0 inside loop body prevents inlining and "
+  "devirtualization; consider a non-virtual alternative or hoist the call">,
+  InGroup<PerfSuggestVirtualInLoop>, DefaultIgnore;
+def note_perf_suggest_impact : Note<
+  "estimated optimization impact: %select{low|medium|high}0">;
+
 } // end of sema component.

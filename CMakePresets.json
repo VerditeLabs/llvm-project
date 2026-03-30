@@ -1,0 +1,41 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "perf-sanitizer-dev",
+      "displayName": "PerfSanitizer Development Build",
+      "description": "Minimal clang+lld build for iterating on the performance sanitizer",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/llvm/build-perf-san",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "LLVM_ENABLE_PROJECTS": "clang;lld",
+        "LLVM_TARGETS_TO_BUILD": "X86",
+        "LLVM_USE_LINKER": "lld",
+        "LLVM_PARALLEL_LINK_JOBS": "2",
+        "LLVM_OPTIMIZED_TABLEGEN": "ON",
+        "LLVM_ENABLE_ASSERTIONS": "ON",
+        "LLVM_ENABLE_WARNINGS": "OFF",
+        "LLVM_INCLUDE_TESTS": "OFF",
+        "LLVM_INCLUDE_EXAMPLES": "OFF",
+        "LLVM_INCLUDE_BENCHMARKS": "OFF",
+        "LLVM_INCLUDE_DOCS": "OFF",
+        "CLANG_ENABLE_ARCMT": "OFF",
+        "CLANG_ENABLE_STATIC_ANALYZER": "OFF",
+        "LLVM_ENABLE_ZLIB": "OFF",
+        "LLVM_ENABLE_ZSTD": "OFF",
+        "LLVM_ENABLE_TERMINFO": "OFF",
+        "LLVM_ENABLE_BINDINGS": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "perf-sanitizer-dev",
+      "configurePreset": "perf-sanitizer-dev",
+      "targets": ["clang", "lld"]
+    }
+  ]
+}

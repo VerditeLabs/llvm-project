@@ -79,6 +79,7 @@
 #include "llvm/Transforms/Instrumentation/MemProfUse.h"
 #include "llvm/Transforms/Instrumentation/MemorySanitizer.h"
 #include "llvm/Transforms/Instrumentation/NumericalStabilitySanitizer.h"
+#include "llvm/Transforms/Instrumentation/PerfSanitizer.h"
 #include "llvm/Transforms/Instrumentation/PGOInstrumentation.h"
 #include "llvm/Transforms/Instrumentation/RealtimeSanitizer.h"
 #include "llvm/Transforms/Instrumentation/SanitizerBinaryMetadata.h"
@@ -1123,6 +1124,16 @@ void EmitAssemblyHelper::RunOptimizationPipeline(
     } else {
       MPM.addPass(PB.buildPerModuleDefaultPipeline(Level));
     }
+  }
+
+  // Performance sanitizer: add IR analysis passes when -fperf-suggest is on.
+  // These are added after the optimization pipeline so they analyze the
+  // optimized IR and can see what the optimizer couldn't handle.
+  if (CodeGenOpts.PerfSuggest) {
+    FunctionPassManager PerfFPM;
+    PerfFPM.addPass(PerfSanitizerPass());
+    MPM.addPass(createModuleToFunctionPassAdaptor(std::move(PerfFPM)));
+    MPM.addPass(PerfSanitizerReportPass());
   }
 
   // Link against bitcodes supplied via the -mlink-builtin-bitcode option

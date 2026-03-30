@@ -1440,6 +1440,22 @@ def FunctionEffects : DiagGroup<"function-effects">;
 def FunctionEffectRedeclarations : DiagGroup<"function-effect-redeclarations">;
 def PerfConstraintImpliesNoexcept : DiagGroup<"perf-constraint-implies-noexcept">;
 
+// Performance suggestion diagnostic groups
+def PerfSuggestConstexpr : DiagGroup<"perf-suggest-constexpr">;
+def PerfSuggestConsteval : DiagGroup<"perf-suggest-consteval">;
+def PerfSuggestByRef : DiagGroup<"perf-suggest-by-ref">;
+def PerfSuggestLoopBound : DiagGroup<"perf-suggest-loop-bound">;
+def PerfSuggestNoexcept : DiagGroup<"perf-suggest-noexcept">;
+def PerfSuggestVirtualInLoop : DiagGroup<"perf-suggest-virtual-in-loop">;
+def PerfSuggest : DiagGroup<"perf-suggest", [
+    PerfSuggestConstexpr,
+    PerfSuggestConsteval,
+    PerfSuggestByRef,
+    PerfSuggestLoopBound,
+    PerfSuggestNoexcept,
+    PerfSuggestVirtualInLoop
+]>;
+
 // Uniqueness Analysis warnings
 def Consumed       : DiagGroup<"consumed">;
 

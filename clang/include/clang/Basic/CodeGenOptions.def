@@ -258,6 +258,8 @@ CODEGENOPT(PointerTBAA       , 1, 1, Benign) ///< Whether or not to use distinct
 CODEGENOPT(StructPathTBAA    , 1, 0, Benign) ///< Whether or not to use struct-path TBAA.
 CODEGENOPT(NewStructPathTBAA , 1, 0, Benign) ///< Whether or not to use enhanced struct-path TBAA.
 CODEGENOPT(SaveTempLabels    , 1, 0, Benign) ///< Save temporary labels.
+CODEGENOPT(PerfSuggest, 1, 0, Benign) ///< Enable performance sanitizer pass
+                                      ///< that suggests source-level optimizations.
 CODEGENOPT(SanitizeAddressUseAfterScope , 1, 0, Benign) ///< Enable use-after-scope detection
                                                         ///< in AddressSanitizer
 ENUM_CODEGENOPT(SanitizeAddressUseAfterReturn,

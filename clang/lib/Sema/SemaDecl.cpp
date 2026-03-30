@@ -77,6 +77,11 @@
 using namespace clang;
 using namespace sema;
 
+// Defined in SemaPerfSuggest.cpp
+namespace clang {
+void emitPerfSuggestions(Sema &S, const FunctionDecl *FD);
+}
+
 Sema::DeclGroupPtrTy Sema::ConvertDeclToDeclGroup(Decl *Ptr, Decl *OwnedType) {
   if (OwnedType) {
     Decl *Group[2] = { OwnedType, Ptr };
@@ -17052,6 +17057,10 @@ Decl *Sema::ActOnFinishFunctionBody(Decl *dcl, Stmt *Body, bool IsInstantiation,
         // Since the body is valid, issue any analysis-based warnings that are
         // enabled.
         ActivePolicy = &WP;
+
+        // Emit performance suggestions if -Wperf-suggest is enabled.
+        if (FD)
+          emitPerfSuggestions(*this, FD);
       }
 
       if (!IsInstantiation && FD &&

@@ -6430,6 +6430,14 @@ void Clang::ConstructJob(Compilation &C, const JobAction &JA,
 
   Args.AddAllArgs(CmdArgs, options::OPT_R_Group);
 
+  // Handle -fperf-suggest: enable AST warnings and IR remark pass
+  if (Args.hasFlag(options::OPT_fperf_suggest, options::OPT_fno_perf_suggest,
+                   false)) {
+    CmdArgs.push_back("-Wperf-suggest");
+    CmdArgs.push_back("-Rpass-missed=perf-sanitizer");
+    CmdArgs.push_back("-fperf-suggest");
+  }
+
   for (const Arg *A :
        Args.filtered(options::OPT_W_Group, options::OPT__SLASH_wd)) {
     A->claim();

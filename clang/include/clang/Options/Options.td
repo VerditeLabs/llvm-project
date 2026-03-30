@@ -4519,6 +4519,15 @@ def foptimization_record_passes_EQ : Joined<["-"], "foptimization-record-passes=
   HelpText<"Only include passes which match a specified regular expression in the generated optimization record (by default, include all passes)">,
   MetaVarName<"<regex>">;
 
+def fperf_suggest : Flag<["-"], "fperf-suggest">,
+  Group<f_Group>, Visibility<[ClangOption, CC1Option]>,
+  HelpText<"Enable performance sanitizer: emit actionable suggestions for "
+           "source-level changes that improve optimization (implies "
+           "-Wperf-suggest and -Rpass-missed=perf-sanitizer)">,
+  MarshallingInfoFlag<CodeGenOpts<"PerfSuggest">>;
+def fno_perf_suggest : Flag<["-"], "fno-perf-suggest">,
+  Group<f_Group>, Visibility<[ClangOption, CC1Option]>;
+
 defm assumptions : BoolFOption<"assumptions",
   LangOpts<"CXXAssumptions">, DefaultTrue,
   NegFlag<SetFalse, [], [ClangOption, CC1Option],

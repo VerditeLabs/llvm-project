@@ -72,6 +72,7 @@ add_clang_library(clangSema
   SemaNVPTX.cpp
   SemaObjC.cpp
   SemaObjCProperty.cpp
+  SemaPerfSuggest.cpp
   SemaOpenACC.cpp
   SemaOpenACCAtomic.cpp
   SemaOpenACCClause.cpp
